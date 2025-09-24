@@ -2,5 +2,8 @@ services:
   - type: web
     name: cooperativa
     env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn cooperativa.wsgi:application
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+    startCommand: gunicorn app.wsgi:application
+
