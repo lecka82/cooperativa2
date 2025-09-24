@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{ obj.nome }}{% endblock %}
+{% block content %}
+<h1>{{ obj.nome }}</h1>
+
+<div style="display:grid;grid-template-columns:160px 1fr;gap:16px;align-items:start;">
+  <div>
+    {% if obj.foto %}
+      <img src="{{ obj.foto.url }}" alt="{{ obj.nome }}" style="width:160px;height:160px;object-fit:cover;border-radius:10px;">
+    {% else %}
+      <div style="width:160px;height:160px;border-radius:10px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#888;">Sem foto</div>
+    {% endif %}
+  </div>
+  <div>
+    <p><strong>Documento:</strong> {{ obj.tipo_documento }} {{ obj.documento }}</p>
+    <p><strong>Cooperativa:</strong> {% if obj.faz_parte_cooperativa %}Sim{% else %}Não{% endif %}</p>
+    <p><strong>E-mail:</strong> {{ obj.email|default:"—" }}</p>
+    <p><strong>Telefone:</strong> {{ obj.telefone|default:"—" }}</p>
+    <p><strong>Endereço:</strong> {{ obj.endereco|default:"—" }}</p>
+    <p><strong>Banco:</strong> {{ obj.banco|default:"—" }} |
+       <strong>Tipo conta:</strong> {{ obj.get_tipo_conta_display|default:"—" }} |
+       <strong>Agência:</strong> {{ obj.agencia|default:"—" }} |
+       <strong>Conta:</strong> {{ obj.numero_conta|default:"—" }}</p>
+
+    <p style="margin-top:12px;">
+      <a href="{% url 'coletores:update' obj.pk %}">Editar</a> ·
+      <a href="{% url 'coletores:list' %}">Voltar</a>
+    </p>
+  </div>
+</div>
+{% endblock %}
