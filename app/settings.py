@@ -4,9 +4,11 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ========= Segurança / Dev =========
-SECRET_KEY = "troque-esta-chave-em-producao"
-DEBUG = True
-ALLOWED_HOSTS = ["*"]
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+
+ALLOWED_HOSTS = ['cooperativa.onrender.com']
 
 # ========= Apps =========
 INSTALLED_APPS = [
@@ -91,7 +93,8 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     BASE_DIR / "app" / "static",   # seus estáticos globais
 ]
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
