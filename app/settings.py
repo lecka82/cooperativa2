@@ -9,7 +9,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['cooperativa.onrender.com']
+ALLOWED_HOSTS = ['coopsuzanapolis.onrender.com']
 
 # ========= Apps =========
 INSTALLED_APPS = [
