@@ -1,4 +1,5 @@
 import os
+import dj_database_url
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -68,11 +69,9 @@ TEMPLATES = [
 
 # ========= Banco de Dados =========
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": dj_database_url.config(default=os.environ.get("DATABASE_URL"))
 }
+
 
 # ========= Senhas =========
 AUTH_PASSWORD_VALIDATORS = [
@@ -180,3 +179,15 @@ JAZZMIN_UI_TWEAKS = {
     "body_small_text": False,
     "footer_small_text": True,
 }
+
+
+if not DEBUG:
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
+
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+
