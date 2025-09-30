@@ -36,3 +36,4 @@ def custom_login(request):
     # Deixei aqui só para não quebrar importes antigos caso existam.
     from django.contrib.auth.views import LoginView
     return LoginView.as_view(template_name="pagina/login.html")(request)
+# redeploy
