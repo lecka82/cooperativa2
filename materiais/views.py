@@ -47,6 +47,14 @@ class MaterialCreateView(LoginRequiredMixin, CreateView):
     template_name = "materiais/materiais_form.html"
     success_url = reverse_lazy("materiais:list")
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["total_kg"] = None
+        ctx["total_rs"] = None
+        ctx["ultimos"] = []
+        return ctx
+
+
 
 class MaterialUpdateView(LoginRequiredMixin, UpdateView):
     model = Material
