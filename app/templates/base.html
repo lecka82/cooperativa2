@@ -24,9 +24,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: #0033a0; /* Azul da bandeira */
+      background-color: #0033a0;
       padding: 10px 30px;
-      border-bottom: 4px solid #ffcc00; /* Detalhe em amarelo */
+      border-bottom: 4px solid #ffcc00;
     }
     .banner-superior div { flex: 1; display: flex; align-items: center; justify-content: center; }
     .logo-esquerda { justify-content: flex-start; }
@@ -47,14 +47,12 @@
       padding: 12px 18px; border-radius: 4px; transition: all 0.3s ease; background-color: #0033a0;
     }
     nav ul.menu-principal li a:hover { background-color: #ffcc00; color: #0033a0; }
-    /* garante que o botão submit do form apareça alinhado como os links */
     nav ul.menu-principal li form { margin: 0; }
     nav ul.menu-principal li form .nav-logout {
       background-color: #0033a0; border: none; color: white;
       padding: 12px 18px; font-size: 16px; cursor: pointer; border-radius: 4px; transition: all 0.3s ease;
     }
     nav ul.menu-principal li form .nav-logout:hover { background-color: #ffcc00; color: #0033a0; }
-    /* espaçador para empurrar os itens de auth p/ a direita */
     .push-right { flex: 1 1 auto; }
 
     /* ======== RESPONSIVO ======== */
@@ -87,21 +85,20 @@
   <header>
     <nav>
       <ul class="menu-principal">
-       {% if request.user.is_authenticated %}
-        <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-        <li><a href="/materiais/">Materiais</a></li>
-        <li><a href="/caixa/">Caixa</a></li>
+        {% if request.user.is_authenticated %}
+          <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+          <li><a href="/materiais/">Materiais</a></li>
+          <li><a href="/caixa/">Caixa</a></li>
 
-        {% if request.user.groups.filter(name="Administrador").exists %}
-        <li><a href="{% url 'admin:index' %}">Administração</a></li>
+          {% if request.user.groups.filter(name="Administrador").exists %}
+            <li><a href="{% url 'admin:index' %}">Administração</a></li>
+          {% endif %}
+
+          <li class="push-right"></li>
+
+          <li><a style="pointer-events:none;opacity:.9">Olá, {{ request.user.get_username }}</a></li>
+          <li><a href="{% url 'logout' %}" class="nav-logout">Sair</a></li>
         {% endif %}
-
-        <li class="push-right"></li>
-
-        <li><a style="pointer-events:none;opacity:.9">Olá, {{ request.user.get_username }}</a></li>
-        <li><a href="{% url 'logout' %}" class="nav-logout">Sair</a></li>
-       {% endif %}
-
       </ul>
     </nav>
   </header>
