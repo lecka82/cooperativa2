@@ -87,18 +87,21 @@
   <header>
     <nav>
       <ul class="menu-principal">
-       {% if request.user.is_authenticated %} 
-       <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-       <li><a href="/materiais/">Materiais</a></li>
-       <li><a href="/caixa/">Caixa</a></li>
+       {% if request.user.is_authenticated %}
+        <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+        <li><a href="/materiais/">Materiais</a></li>
+        <li><a href="/caixa/">Caixa</a></li>
 
-       <li class="push-right"></li>
-
-       
-         <li><a style="pointer-events:none;opacity:.9">Olá, {{ request.user.get_username }}</a></li>
-         <li><a href="{% url 'logout' %}" class="nav-logout">Sair</a></li>
-     
+        {% if request.user.groups.filter(name="Administrador").exists %}
+        <li><a href="{% url 'admin:index' %}">Administração</a></li>
         {% endif %}
+
+        <li class="push-right"></li>
+
+        <li><a style="pointer-events:none;opacity:.9">Olá, {{ request.user.get_username }}</a></li>
+        <li><a href="{% url 'logout' %}" class="nav-logout">Sair</a></li>
+       {% endif %}
+
       </ul>
     </nav>
   </header>
