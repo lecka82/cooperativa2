@@ -90,7 +90,7 @@
           <li><a href="/materiais/">Materiais</a></li>
           <li><a href="/caixa/">Caixa</a></li>
 
-          {% if request.user.is_authenticated and request.user.groups.filter(name="Administrador").exists %}
+          {% if user.is_authenticated and user.groups.filter(name="Administrador").exists %}
             <li><a href="{% url 'admin:index' %}">Administração</a></li>
           {% endif %}
 
