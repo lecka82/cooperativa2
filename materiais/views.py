@@ -41,6 +41,9 @@ class MaterialListView(LoginRequiredMixin, ListView):
         return qs
 
 
+import logging
+logger = logging.getLogger(__name__)
+
 class MaterialCreateView(LoginRequiredMixin, CreateView):
     model = Material
     form_class = MaterialForm
@@ -49,9 +52,12 @@ class MaterialCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["total_kg"] = None
-        ctx["total_rs"] = None
-        ctx["ultimos"] = []
+        try:
+            ctx.setdefault("total_kg", None)
+            ctx.setdefault("total_rs", None)
+            ctx.setdefault("ultimos", [])
+        except Exception as e:
+            logger.error(f"Erro ao montar contexto do MaterialCreateView: {e}")
         return ctx
 
 
