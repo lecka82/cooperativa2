@@ -16,32 +16,35 @@
       <a href="{% url 'materiais:list' %}" style="margin-left:8px;">Cancelar</a>
     </form>
 
-    {% if form.instance.pk %}
-      <aside style="border:1px solid #e5e7eb;border-radius:8px;padding:16px;">
-        <h3 style="margin-top:0;margin-bottom:12px;">Totais arrecadados</h3>
-        <p style="margin:4px 0;">
-          <strong>Total (kg):</strong>
-          {{ total_kg|default_if_none:"0"|floatformat:3 }}
-        </p>
-        <p style="margin:4px 0;">
-          <strong>Total (R$):</strong>
-          R$ {{ total_rs|default_if_none:"0.00"|floatformat:2 }}
-        </p>
+    {# 
+{% if form.instance.pk %}
+  <aside style="border:1px solid #e5e7eb;border-radius:8px;padding:16px;">
+    <h3 style="margin-top:0;margin-bottom:12px;">Totais arrecadados</h3>
+    <p style="margin:4px 0;">
+      <strong>Total (kg):</strong>
+      {{ total_kg|default_if_none:"0"|floatformat:3 }}
+    </p>
+    <p style="margin:4px 0;">
+      <strong>Total (R$):</strong>
+      R$ {{ total_rs|default_if_none:"0.00"|floatformat:2 }}
+    </p>
 
-        <hr style="margin:16px 0;">
+    <hr style="margin:16px 0;">
 
-        <h4 style="margin:0 0 8px;">Últimos lançamentos</h4>
-        <ul style="padding-left:18px;margin:0;">
-          {% for l in ultimos %}
-            <li style="margin:4px 0;">
-              {{ l.data }} — {{ l.quantidade_kg|default_if_none:"-"|floatformat:3 }} kg — R$ {{ l.valor|floatformat:2 }}
-              {% if l.descricao %} — {{ l.descricao }}{% endif %}
-            </li>
-          {% empty %}
-            <li>Sem lançamentos de arrecadação.</li>
-          {% endfor %}
-        </ul>
-      </aside>
-    {% endif %}
+    <h4 style="margin:0 0 8px;">Últimos lançamentos</h4>
+    <ul style="padding-left:18px;margin:0;">
+      {% for l in ultimos %}
+        <li style="margin:4px 0;">
+          {{ l.data }} — {{ l.quantidade_kg|default_if_none:"-"|floatformat:3 }} kg — R$ {{ l.valor|floatformat:2 }}
+          {% if l.descricao %} — {{ l.descricao }}{% endif %}
+        </li>
+      {% empty %}
+        <li>Sem lançamentos de arrecadação.</li>
+      {% endfor %}
+    </ul>
+  </aside>
+{% endif %}
+#}
+
   </div>
 {% endblock %}
