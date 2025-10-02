@@ -10,7 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
 
   <style>
-    /* ======== BASE ======== */
     body {
       font-family: 'Merriweather', sans-serif;
       color: #333;
@@ -19,7 +18,6 @@
       background-color: #f5f5f5;
     }
 
-    /* ======== BANNER SUPERIOR ======== */
     .banner-superior {
       display: flex;
       justify-content: space-between;
@@ -34,7 +32,6 @@
     .logo-direita  { justify-content: flex-end; }
     .banner-superior img { height: 90px; object-fit: contain; }
 
-    /* ======== NAV ======== */
     header { background-color: #0033a0; color: white; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
     nav { display: flex; justify-content: center; align-items: center; padding: 0 8px; }
     nav ul.menu-principal {
@@ -55,7 +52,6 @@
     nav ul.menu-principal li form .nav-logout:hover { background-color: #ffcc00; color: #0033a0; }
     .push-right { flex: 1 1 auto; }
 
-    /* ======== RESPONSIVO ======== */
     @media (max-width: 900px) {
       nav ul.menu-principal li a, nav ul.menu-principal li form .nav-logout { font-size: 14px; padding: 10px 12px; }
       nav ul.menu-principal { gap: 6px 12px; }
@@ -67,10 +63,8 @@
     }
     @media (max-width: 420px) { nav ul.menu-principal li { flex: 1 1 100%; } }
 
-    /* ======== MAIN ======== */
     main { padding: 20px; background-color: #fff; border-radius: 10px; margin: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 
-    /* ======== FOOTER ======== */
     footer { background-color: #0033a0; color: white; padding: 20px; text-align: center; font-size: 14px; margin-top: 30px; }
   </style>
 </head>
@@ -89,13 +83,6 @@
           <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
           <li><a href="/materiais/">Materiais</a></li>
           <li><a href="/caixa/">Caixa</a></li>
-
-          {% if user and user.is_authenticated %}
-            {% if user.groups.filter(name="Administrador").exists %}
-              <li><a href="{% url 'admin:index' %}">Administração</a></li>
-            {% endif %}
-          {% endif %}
-
 
           <li class="push-right"></li>
 
