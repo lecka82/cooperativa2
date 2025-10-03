@@ -45,13 +45,7 @@ class MaterialCreateView(LoginRequiredMixin, CreateView):
     form_class = MaterialForm
     template_name = "materiais/materiais_form.html"
     success_url = reverse_lazy("materiais:list")
-
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx.setdefault("total_kg", None)
-        ctx.setdefault("total_rs", None)
-        ctx.setdefault("ultimos", [])
-        return ctx
+    # Nenhum contexto extra aqui — evita erro 500 na criação
 
 
 class MaterialUpdateView(LoginRequiredMixin, UpdateView):
