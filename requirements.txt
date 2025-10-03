@@ -5,8 +5,10 @@ cloudinary==1.44.1
 dj-database-url==3.0.1
 Django==5.2.6
 django-cloudinary-storage==0.3.0
+django-humanize==0.1.2
 django-jazzmin @ git+https://github.com/farridav/django-jazzmin.git@d269874c96fe5ff6d231c3017cdd4650bc2f3105
 gunicorn==23.0.0
+humanize==4.13.0
 idna==3.10
 packaging==25.0
 pillow==11.3.0
