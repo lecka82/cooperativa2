@@ -2,6 +2,8 @@ from django.db.models import Q, Sum  # ✅ adicionar Sum
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic.edit import CreateView
+
 from django.http import JsonResponse, Http404
 from django.views.decorators.http import require_GET
 from django.contrib.auth.decorators import login_required
@@ -44,21 +46,28 @@ class MaterialListView(LoginRequiredMixin, ListView):
 import logging
 logger = logging.getLogger(__name__)
 
-class MaterialCreateView(LoginRequiredMixin, CreateView):
+class MaterialCreateView(CreateView):
     model = Material
-    form_class = MaterialForm
-    template_name = "materiais/materiais_form.html"
-    success_url = reverse_lazy("materiais:list")
+    fields = ['nome', 'preco_kg', 'ativo']
+    template_name = 'materiais/materiais_form.html'
+    success_url = reverse_lazy('materiais:list')
 
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        try:
-            ctx.setdefault("total_kg", None)
-            ctx.setdefault("total_rs", None)
-            ctx.setdefault("ultimos", [])
-        except Exception as e:
-            logger.error(f"Erro ao montar contexto do MaterialCreateView: {e}")
-        return ctx
+
+#class MaterialCreateView(LoginRequiredMixin, CreateView):
+ #   model = Material
+  #  form_class = MaterialForm
+   # template_name = "materiais/materiais_form.html"
+    #success_url = reverse_lazy("materiais:list")
+
+    #def get_context_data(self, **kwargs):
+     #   ctx = super().get_context_data(**kwargs)
+      #  try:
+       #     ctx.setdefault("total_kg", None)
+        #    ctx.setdefault("total_rs", None)
+         #   ctx.setdefault("ultimos", [])
+      #  except Exception as e:
+       #     logger.error(f"Erro ao montar contexto do MaterialCreateView: {e}")
+       # return ctx
 
 
 

@@ -1,62 +1,14 @@
 {% extends "base.html" %}
-{% load humanize %}
 
-{% block title %}
-  {% if form.instance and form.instance.pk %}
-    Editar material
-  {% else %}
-    Novo material
-  {% endif %}
-{% endblock %}
+{% block title %}Novo material{% endblock %}
 
 {% block content %}
-  <h1>
-    {% if form.instance and form.instance.pk %}
-      Editar material
-    {% else %}
-      Novo material
-    {% endif %}
-  </h1>
+  <h1>Novo material</h1>
 
-  <div style="display:grid;grid-template-columns:1fr;gap:16px;max-width:980px;">
-    <form method="post" style="max-width:520px;">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" style="background:#0033a0;color:#fff;padding:8px 12px;border:none;border-radius:6px;">
-        Salvar
-      </button>
-      <a href="{% url 'materiais:list' %}" style="margin-left:8px;">Cancelar</a>
-    </form>
-
-    {# 
-    {% if form.instance and form.instance.pk %}
-      <aside style="border:1px solid #e5e7eb;border-radius:8px;padding:16px;">
-        <h3 style="margin-top:0;margin-bottom:12px;">Totais arrecadados</h3>
-        <p style="margin:4px 0;">
-          <strong>Total (kg):</strong>
-          {{ total_kg|default_if_none:"0"|floatformat:3 }}
-        </p>
-        <p style="margin:4px 0;">
-          <strong>Total (R$):</strong>
-          R$ {{ total_rs|default_if_none:"0.00"|floatformat:2 }}
-        </p>
-
-        <hr style="margin:16px 0;">
-
-        <h4 style="margin:0 0 8px;">Últimos lançamentos</h4>
-        <ul style="padding-left:18px;margin:0;">
-          {% for l in ultimos %}
-            <li style="margin:4px 0;">
-              {{ l.data }} — {{ l.quantidade_kg|default_if_none:"-"|floatformat:3 }} kg — R$ {{ l.valor|floatformat:2 }}
-              {% if l.descricao %} — {{ l.descricao }}{% endif %}
-            </li>
-          {% empty %}
-            <li>Sem lançamentos de arrecadação.</li>
-          {% endfor %}
-        </ul>
-      </aside>
-    {% endif %}
-    #}
-
-  </div>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salvar</button>
+    <a href="{% url 'materiais:list' %}">Cancelar</a>
+  </form>
 {% endblock %}
