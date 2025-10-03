@@ -112,7 +112,7 @@ JAZZMIN_SETTINGS = {
     "login_logo": "img/logo_suzanapolis.png",
     "login_logo_dark": None,
     "use_google_fonts_cdn": True,
-    "show_ui_builder": False,
+    "show_ui_builder": True,
     "custom_css": "css/jazzmin_custom.css",
     "topmenu_links": [
         {"name": "Admin", "url": "admin:index"},
