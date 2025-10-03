@@ -1,9 +1,7 @@
-from django.db.models import Q, Sum  # ✅ adicionar Sum
+from django.db.models import Q, Sum
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
-from django.views.generic.edit import CreateView
-
 from django.http import JsonResponse, Http404
 from django.views.decorators.http import require_GET
 from django.contrib.auth.decorators import login_required
@@ -27,7 +25,6 @@ class MaterialListView(LoginRequiredMixin, ListView):
         if ativo in {"0", "1"}:
             qs = qs.filter(ativo=(ativo == "1"))
 
-        # ✅ Anotar totais por material considerando ENTRADA de ARRECADAÇÃO
         qs = qs.annotate(
             total_kg=Sum(
                 "lancamentos__quantidade_kg",
@@ -43,32 +40,18 @@ class MaterialListView(LoginRequiredMixin, ListView):
         return qs
 
 
-import logging
-logger = logging.getLogger(__name__)
-
-class MaterialCreateView(CreateView):
+class MaterialCreateView(LoginRequiredMixin, CreateView):
     model = Material
-    fields = ['nome', 'preco_kg', 'ativo']
-    template_name = 'materiais/materiais_form.html'
-    success_url = reverse_lazy('materiais:list')
+    form_class = MaterialForm
+    template_name = "materiais/materiais_form.html"
+    success_url = reverse_lazy("materiais:list")
 
-
-#class MaterialCreateView(LoginRequiredMixin, CreateView):
- #   model = Material
-  #  form_class = MaterialForm
-   # template_name = "materiais/materiais_form.html"
-    #success_url = reverse_lazy("materiais:list")
-
-    #def get_context_data(self, **kwargs):
-     #   ctx = super().get_context_data(**kwargs)
-      #  try:
-       #     ctx.setdefault("total_kg", None)
-        #    ctx.setdefault("total_rs", None)
-         #   ctx.setdefault("ultimos", [])
-      #  except Exception as e:
-       #     logger.error(f"Erro ao montar contexto do MaterialCreateView: {e}")
-       # return ctx
-
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx.setdefault("total_kg", None)
+        ctx.setdefault("total_rs", None)
+        ctx.setdefault("ultimos", [])
+        return ctx
 
 
 class MaterialUpdateView(LoginRequiredMixin, UpdateView):
@@ -77,9 +60,8 @@ class MaterialUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "materiais/materiais_form.html"
     success_url = reverse_lazy("materiais:list")
 
-    # ✅ Mostrar totais e últimos lançamentos no formulário (edição)
     def get_context_data(self, **kwargs):
-        from caixa.models import LancamentoCaixa  # import local para evitar ciclos
+        from caixa.models import LancamentoCaixa
         ctx = super().get_context_data(**kwargs)
         base = LancamentoCaixa.objects.filter(
             material=self.object, tipo="E", categoria="arrecadacao"
@@ -104,7 +86,6 @@ class MaterialDetailView(LoginRequiredMixin, DetailView):
     template_name = "materiais/materiais_detail.html"
     context_object_name = "obj"
 
-    # ✅ Detalhe também mostra totais e últimos lançamentos
     def get_context_data(self, **kwargs):
         from caixa.models import LancamentoCaixa
         ctx = super().get_context_data(**kwargs)
@@ -127,5 +108,4 @@ def material_preco(request, pk: int):
         m = Material.objects.get(pk=pk)
     except Material.DoesNotExist:
         raise Http404("Material não encontrado")
-    # str() evita problemas de serialização Decimal
     return JsonResponse({"preco_kg": str(m.preco_kg), "ativo": m.ativo})
