@@ -42,3 +42,32 @@ a, .text-primary {
 .card { border-radius: 12px; }
 .card-header { background:#f5f6f8; border-bottom-color:#e5e7eb; }
 .table thead th { background:#f5f6f8; }
+
+/* Texto claro em áreas escuras */
+body,
+.main-header,
+.main-sidebar,
+.navbar,
+.sidebar,
+.brand-link,
+.nav-sidebar .nav-link,
+.nav-sidebar .nav-link.active,
+.navbar-nav .nav-item .nav-link,
+.card,
+.card-body,
+.table th,
+.table td {
+    color: #f0f0f0 !important;  /* tom claro, mas não branco puro */
+}
+
+/* Ícones e links */
+.nav-icon,
+.nav-sidebar .nav-link i,
+.navbar-nav .nav-item i {
+    color: #f0f0f0 !important;
+}
+
+/* Corrige links escuros */
+a {
+    color: #ffcc00 !important;  /* amarelo para destaque */
+}
