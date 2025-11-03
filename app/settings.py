@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -9,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ========= Segurança / Dev =========
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = os.environ.get('DEBUG', '').lower() == 'true'
 ALLOWED_HOSTS = ['coopsuzanapolis.onrender.com']
 
 # ========= Apps =========
@@ -68,6 +69,8 @@ TEMPLATES = [
 DATABASES = {
     "default": dj_database_url.config(default=os.environ.get("DATABASE_URL"))
 }
+
+
 
 # ========= Validação de Senhas =========
 AUTH_PASSWORD_VALIDATORS = [

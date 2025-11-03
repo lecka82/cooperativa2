@@ -1,0 +1,8 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+print("DATABASE_URL =", os.environ.get("DATABASE_URL"))
+print("DEBUG =", os.environ.get("DEBUG"))
+print("DJANGO_SECRET_KEY =", os.environ.get("DJANGO_SECRET_KEY"))
